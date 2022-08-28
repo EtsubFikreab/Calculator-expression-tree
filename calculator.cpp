@@ -247,7 +247,7 @@ int toPostfix(std::string infix, nodeTree<token> *&postfix)
                         break;
                     else
                     {
-                        /*if (cmpPrec('(', op.peep()) == -1)
+                        if (cmpPrec('^', op.peep()) == -1)
                         {
                             // unary operators
                             t1 = tree.pop();
@@ -258,7 +258,7 @@ int toPostfix(std::string infix, nodeTree<token> *&postfix)
                             t->right = NULL;
                             tree.push(t);
                         }
-                        else*/
+                        else
                         {
                             t1 = tree.pop();
                             t2 = tree.pop();
@@ -280,9 +280,9 @@ int toPostfix(std::string infix, nodeTree<token> *&postfix)
 
     while (!op.isEmpty())
     {
-        /*if (cmpPrec('(', op.peep()) == -1)
+        // unary operators
+        if (cmpPrec('^', op.peep()) == -1)
         {
-            // unary operators
             t1 = tree.pop();
             t = new nodeTree<token>;
             t->data._op = op.pop();
@@ -291,7 +291,7 @@ int toPostfix(std::string infix, nodeTree<token> *&postfix)
             t->right = NULL;
             tree.push(t);
         }
-        else*/
+        else
         {
             t1 = tree.pop();
             t2 = tree.pop();
