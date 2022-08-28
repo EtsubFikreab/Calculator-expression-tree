@@ -60,7 +60,7 @@ int symbolType(char symbol);
 int precValue(char symbol);
 int cmpPrec(char oprStk, char oprInp);
 int associativity(char opr);
-int toPostfix(std::string infix, std::string &postfix);
+int toPostfix(std::string infix, nodeTree<token> *&postfix);
 double evaluate(nodeTree<token> *exp);
 int mainMenuChoice();
 void help();
@@ -76,20 +76,26 @@ int main()
             std::string i;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::getline(std::cin, i);
-            std::string p;
+            nodeTree<token> *p;
             if (toPostfix(i, p) == -1)
             {
                 std::cout << "There is a syntactical error in the expression,\n"
                              "please rerun the program after correcting the expression\n"
                              "Press enter to continue... ";
                 std::cin.get();
+                continue;
             }
-            /*else if (evaluate(p) == -1)
+            double eval = evaluate(p);
+            if (eval != -1)
+            {
+                cout << "Result: " << eval << endl;
+            }
+            else
             {
                 std::cout << "Sorry, the expression could not be evaluated\n"
                              "Press enter to continue... ";
                 std::cin.get();
-            }*/
+            }
         }
         else if (choice == 2)
         {
@@ -183,8 +189,7 @@ int associativity(char opr)
     return 2;
 }
 
-
-int toPostfix(std::string infix, std::string &postfix)
+int toPostfix(std::string infix, nodeTree<token> *&postfix)
 {
     char ch;
     int type, cmp;
@@ -299,8 +304,7 @@ int toPostfix(std::string infix, std::string &postfix)
             tree.push(t);
         }
     }
-    cout << "Result: " << evaluate(tree.pop()) << endl
-         << endl;
+    postfix = tree.pop();
     return 0;
 }
 
